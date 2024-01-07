@@ -24,7 +24,9 @@ html
 			});
 		 
 	  });
-	</script>
+
+	console.log(${quanity})
+</script>
 
 <body>
 <br>

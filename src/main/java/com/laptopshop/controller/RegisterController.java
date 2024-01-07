@@ -1,11 +1,12 @@
 package com.laptopshop.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.laptopshop.entities.NguoiDung;
 import com.laptopshop.service.NguoiDungService;
 import com.laptopshop.service.SecurityService;
 import com.laptopshop.validator.NguoiDungValidator;
+
 
 @Controller
 public class RegisterController {

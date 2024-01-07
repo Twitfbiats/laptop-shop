@@ -1,11 +1,26 @@
 package com.laptopshop.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -32,6 +47,24 @@ public class SanPhamServiceImpl implements SanPhamService {
 
 	@Autowired
 	private HangSanXuatRepository hangSanXuatRepo;
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	@PostConstruct
+	public void postConstruct()
+	{
+		SearchSanPhamObject searchSanPhamObject1 = new SearchSanPhamObject();
+		searchSanPhamObject1.setDanhMucId("13");
+		searchSanPhamObject1.setHangSXId("");
+		searchSanPhamObject1.setDonGia("tren-20-trieu");
+		List<SanPham> sanPhams = getAllSanPhamByFilterUsingCriteriaAPI(searchSanPhamObject1, 2, 5);
+		for (SanPham sanPham : sanPhams)
+		System.out.println(sanPham.getTenSanPham()+"-"+ sanPham.getThongTinChung()+"\n");
+
+		// SanPham sanPham = getSanPhamByIdJpaCriteria();
+		// System.out.println(sanPham.getTenSanPham()+"-"+ sanPham.getThongTinChung());
+	}
 
 	// đổi từ SanPhamDto sang đối tượng SanPham để add vào db
 	public SanPham convertFromSanPhamDto(SanPhamDto dto) {
@@ -120,6 +153,91 @@ public class SanPhamServiceImpl implements SanPhamService {
 			break;
 		}
 		return sanPhamRepo.findAll(builder, PageRequest.of(page, limit, sort));
+	}
+
+	public List<SanPham> getSanPhamByIdJpaCriteria()
+	{
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<SanPham> query = builder.createQuery(SanPham.class);
+		Root<SanPham> root = query.from(SanPham.class);
+
+		// return entityManager.createQuery(query.select(root)
+		// .where(builder.gt(root.get("donGia"), 41099000))).getResultList();
+
+		return entityManager.createQuery(query.select(root)
+		.where(builder.like(root.get("tenSanPham"), "null"))).getResultList();
+	}
+
+	public List<SanPham> getAllSanPhamByFilterUsingCriteriaAPI(SearchSanPhamObject searchSanPhamObject
+	,int page ,int limit)
+	{
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<SanPham> query = builder.createQuery(SanPham.class);
+		Root<SanPham> root = query.from(SanPham.class);
+
+		ArrayList<Predicate> predicates = new ArrayList<>();
+		if (searchSanPhamObject.getDanhMucId().length() != 0) 
+			predicates.add(
+				builder.equal(root.get("danhMuc")
+				, danhMucRepo.findById(Long.parseLong(searchSanPhamObject.getDanhMucId())).get())
+			);
+
+		if (searchSanPhamObject.getHangSXId().length() != 0)
+			predicates.add(
+				builder.equal(root.get("hangSanXuat")
+				, hangSanXuatRepo.findById(Long.parseLong(searchSanPhamObject.getHangSXId())).get())
+			);
+
+		String price = searchSanPhamObject.getDonGia();
+		Predicate predicate3 = null;
+		switch (price) {
+			case "duoi-2-trieu":
+				predicate3 = builder.lt(root.get("donGia"), 2000000);
+				break;
+
+			case "2-trieu-den-4-trieu":
+				predicate3 = builder.between(root.get("donGia"), 2000000, 4000000);
+				break;
+
+			case "4-trieu-den-6-trieu":
+				predicate3 = builder.between(root.get("donGia"), 4000000, 6000000);
+				break;
+
+			case "6-trieu-den-10-trieu":
+				predicate3 = builder.between(root.get("donGia"), 6000000, 10000000);
+				break;
+
+			case "tren-10-trieu":
+				predicate3 = builder.gt(root.get("donGia"), 10000000);
+				break;
+
+			case "tren-20-trieu":
+				predicate3 = builder.gt(root.get("donGia"), 20000000);
+			break;
+
+			default:
+				break;
+			}
+		if (predicate3 != null) predicates.add(predicate3);
+
+		List<SanPham> sanPhams;
+		if (searchSanPhamObject.getSapXepTheoGia().equals("desc"))
+			sanPhams = entityManager.createQuery(query.select(root).where(predicates.toArray(new Predicate[] {}))
+			.orderBy(builder.desc(root.get("donGia"))))
+			.setFirstResult((page-1)*limit).setMaxResults(limit)
+			.getResultList();
+		else 
+			sanPhams = entityManager.createQuery(query.select(root).where(predicates.toArray(new Predicate[] {}))
+			.orderBy(builder.asc(root.get("donGia"))))
+			.setFirstResult((page-1)*limit).setMaxResults(limit)
+			.getResultList();
+
+		return sanPhams;
+	}
+
+	public List<SanPham> getProductByIdQueryTest()
+	{
+		return sanPhamRepo.findRandomTest();
 	}
 
 	@Override
@@ -308,5 +426,11 @@ public class SanPhamServiceImpl implements SanPhamService {
 		}
 
 		return sanPhamRepo.findAll(builder, PageRequest.of(page - 1, resultPerPage));
+	}
+
+	@Override
+	public Page<SanPham> getAllSanPhamByFilter(int page, int limit) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getAllSanPhamByFilter'");
 	}
 }

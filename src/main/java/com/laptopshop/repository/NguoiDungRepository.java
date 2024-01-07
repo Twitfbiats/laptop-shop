@@ -14,7 +14,7 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long>{
 
 	NguoiDung findByEmail(String email);
 
-	Page<NguoiDung> findByVaiTro(Set<VaiTro> vaiTro, Pageable of);
+	Page<NguoiDung> findByVaiTroIn(Set<VaiTro> vaiTro, Pageable of);
 
-	List<NguoiDung> findByVaiTro(Set<VaiTro> vaiTro);
+	List<NguoiDung> findByVaiTroIn(Set<VaiTro> vaiTro);
 }

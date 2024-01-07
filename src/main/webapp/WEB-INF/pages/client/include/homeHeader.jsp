@@ -28,7 +28,7 @@
 
 <script>
 		    // You can also use "$(window).load(function() {"
-			    $(function () {
+			$(function () {
 
 			      // Slideshow 1
 			      $("#slider1").responsiveSlides({
@@ -37,7 +37,9 @@
 			      });
 			});
 		   
-		  </script>
+		   var contextPath = "<%=request.getContextPath()%>";
+		   console.log(contextPath)
+</script>
 
 </head>
 <body>
@@ -80,7 +82,6 @@
 								nhập</a></li>
 						<li><a href="<%=request.getContextPath()%>/cart"> <span>Giỏ hàng&nbsp;&nbsp;&nbsp;</span></a><span
 							class="glyphicon glyphicon-shopping-cart"></span></li>
-
 					</ul>
 				</c:if>
 			</div>

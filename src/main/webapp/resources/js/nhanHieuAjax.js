@@ -189,7 +189,6 @@ $(document).ready(function(){
     	$('.nhanHieuTable tbody tr').remove();
     	var page = $('li.active').children().text();
     	$('.pagination li').remove();
-    	var count = $('.nhanHieuTable tbody').children().length;
     	ajaxGet(page);
     };
     

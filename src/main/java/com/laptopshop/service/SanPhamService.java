@@ -19,6 +19,8 @@ public interface SanPhamService {
 
 	Page<SanPham> getAllSanPhamByFilter(SearchSanPhamObject object, int page, int limit);
 
+	Page<SanPham> getAllSanPhamByFilter(int page, int limit);
+
 	SanPham getSanPhamById(long id);
 	
 	List<SanPham> getLatestSanPham();

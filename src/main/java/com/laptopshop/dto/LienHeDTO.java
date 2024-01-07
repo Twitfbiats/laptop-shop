@@ -2,7 +2,7 @@ package com.laptopshop.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 public class LienHeDTO {
 

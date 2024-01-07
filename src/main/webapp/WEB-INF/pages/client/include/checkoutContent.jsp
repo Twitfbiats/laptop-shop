@@ -24,7 +24,7 @@
 <body>
 
 <div class="container">
-	<form method="POST" action="<%=request.getContextPath()%>/thankyou">
+	<form method="POST" action="<%=request.getContextPath()%>/complete-order">
 	<div class = "row">
 	<br><br>
 		<c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -52,14 +52,19 @@
 			<p class="border-p" style="line-height:1.5;"><b>Thông tin nhận hàng</b></p>
 		
 			<p style="line-height:2;" >Họ tên người nhận hàng *</p>
-			<input size="27" name="hoTenNguoiNhan" required>
+			<input size="27" name="hoTenNguoiNhan" id="hoTenNguoiNhan" required>
 			
 			<p style="line-height:2;">Số điện thoại *</p>
-			<input size="27" name="sdtNhanHang" required>
-			
-			
+			<input size="27" name="sdtNhanHang" id="sdtNhanHang" required>
+					
 			<p style="line-height:2;">Địa chỉ(số nhà, đường, tỉnh thành) *</p>
-			<textarea rows="5" cols="29" name="diaChiNhan" required></textarea>
+			<textarea rows="5" cols="29" name="diaChiNhan" id="diaChiNhan" required></textarea>
+
+			<br><br>
+			<div class="alert" id="alertMsg" hidden>
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				Xin hãy điền đủ thông tin.
+			</div>
 
 			<br><br>
 			<input type="hidden" id="tongGiaTri" name="tongGiaTri">
@@ -104,12 +109,13 @@
 			<br>
 			<p>Tổng giá trị đơn hàng:     <b id="ordertotal"> </b></p>
 			<br>
-			 &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;
-			<a href="<%=request.getContextPath()%>/cart" class="btn btn-primary">Quay lại giỏ hàng</a>
-			 &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-			 
-			<button class="btn btn-danger pull-center" type="submit" id="submit">Gửi đơn hàng</button>
-		
+			&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;
+			
+			<div>
+				<div id="paypal-container"></div> 
+				<button class="btn btn-danger pull-center" type="submit" id="submit">Thanh toán khi nhận hàng</button>
+				<a href="<%=request.getContextPath()%>/cart" class="btn btn-primary">Quay lại giỏ hàng</a>
+			</div>
 			<br><br>
 		
 		</div>

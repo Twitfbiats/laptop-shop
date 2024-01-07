@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,12 +70,12 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
 	@Override
 	public Page<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro,  int page) {
-		return nguoiDungRepo.findByVaiTro(vaiTro, PageRequest.of(page - 1, 6));
+		return nguoiDungRepo.findByVaiTroIn(vaiTro, PageRequest.of(page - 1, 6));
 	}
 
 	@Override
 	public List<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro) {
-		return nguoiDungRepo.findByVaiTro(vaiTro);
+		return nguoiDungRepo.findByVaiTroIn(vaiTro);
 	}
 
 	@Override

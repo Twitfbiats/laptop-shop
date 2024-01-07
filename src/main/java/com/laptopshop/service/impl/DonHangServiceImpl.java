@@ -128,4 +128,9 @@ public class DonHangServiceImpl implements DonHangService {
 		return donHangRepo.countByTrangThaiDonHang(trangThaiDonHang);
 	}
 
+	@Override
+	public DonHang findLatestDonHangByMaNguoiDat(Long maNguoiDat) {
+		
+		return donHangRepo.findLatestDonHangByMaNguoiDat(maNguoiDat);
+	}
 }

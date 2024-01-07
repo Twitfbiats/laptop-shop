@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.laptopshop.dto.SearchSanPhamObject;
 import com.laptopshop.entities.SanPham;
 import com.laptopshop.service.SanPhamService;
+
 
 @Controller
 public class ClientSearchController {

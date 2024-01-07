@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 
 import com.laptopshop.dto.SearchDonHangObject;
 import com.laptopshop.entities.DonHang;
@@ -29,4 +30,6 @@ public interface DonHangService {
 	List<DonHang> getDonHangByNguoiDung(NguoiDung currentUser);
 	
 	int countByTrangThaiDonHang(String trangThaiDonHang);
+
+	DonHang findLatestDonHangByMaNguoiDat(Long maNguoiDat);
 }

@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import com.laptopshop.entities.ResponseObject;
 import com.laptopshop.service.LienHeService;
 import com.laptopshop.service.NguoiDungService;
 import com.laptopshop.ulti.EmailUlti;
+
 
 @RestController
 @RequestMapping("/api/lien-he")

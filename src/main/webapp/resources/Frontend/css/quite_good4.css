@@ -1,0 +1,44 @@
+body, html {
+  height: 100%;
+}
+
+.falling-leaves {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  //left: 25%;
+  width: 100%;
+  max-width: 1920px; //880
+  max-height: 1080px; //880
+  //transform: translate(-50%, 0);
+  //border: 20px solid #fff;
+  //border-radius: 50px;
+  //background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/125707/sidebar-bg.png) no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.leaf-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.leaf-scene div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  //background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/125707/leaf.svg) no-repeat;
+  background: url(https://img.uxwing.com/wp-content/themes/uxwing/download/nature-environment-ecology/green-leaf-icon.svg) no-repeat;
+  background-size: 100%;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: visible;
+          backface-visibility: visible;
+  pointer-events: none;
+}

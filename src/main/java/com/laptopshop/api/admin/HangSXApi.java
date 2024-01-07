@@ -3,12 +3,13 @@ package com.laptopshop.api.admin;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.laptopshop.entities.HangSanXuat;
 import com.laptopshop.entities.ResponseObject;
 import com.laptopshop.service.HangSanXuatService;
+
 
 @RestController
 @RequestMapping("/api/nhan-hieu")

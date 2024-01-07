@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
 
 import com.laptopshop.entities.DonHang;
 import com.laptopshop.entities.NguoiDung;
@@ -25,4 +26,6 @@ public interface DonHangRepository extends JpaRepository<DonHang, Long>, Queryds
 	
 	public int countByTrangThaiDonHang(String trangThaiDonHang);
 	
+	@Query(value = "SELECT dh.* FROM Don_Hang dh WHERE dh.id = (SELECT MAX(dh2.id) FROM Don_Hang dh2 WHERE dh2.ma_nguoi_dat = :maNguoiDat)", nativeQuery = true)
+    public DonHang findLatestDonHangByMaNguoiDat(@Param("maNguoiDat") Long maNguoiDat);
 }
